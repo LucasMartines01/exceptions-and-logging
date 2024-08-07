@@ -12,10 +12,10 @@ public class ExceptionLoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionLoggingAspect.class);
 
-    @Pointcut("@annotation(EnableLogging)")
+    @Pointcut("@within(EnableLogging) || @annotation(EnableLogging)")
     public void enableLoggingPointcut() {}
 
-    @Around("enableLoggingPointcut() && execution(* *(..))")
+    @Around("enableLoggingPointcut()")
     public Object logException(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             return joinPoint.proceed();
